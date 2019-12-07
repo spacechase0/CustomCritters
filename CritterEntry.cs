@@ -87,9 +87,9 @@ namespace CustomCritters
                     ret = false;
                 else if (MaxTimeOfDay != -1 && Game1.timeOfDay > MaxTimeOfDay)
                     ret = false;
-                else if (Seasons != null && Seasons.Count() > 0 && !Seasons.Contains(Game1.currentSeason))
+                else if (Seasons != null && Seasons.Any() && !Seasons.Contains(Game1.currentSeason))
                     ret = false;
-                else if (Locations != null && Locations.Count() > 0 && !Locations.Contains(loc.Name))
+                else if (Locations != null && Locations.Any() && !Locations.Contains(loc.Name))
                     ret = false;
                 else if (Game1.random.NextDouble() >= Math.Max(0.15, (Math.Min(0.5, loc.map.Layers[0].LayerWidth * loc.map.Layers[0].LayerHeight / ChancePerTile))))
                     ret = false;
@@ -181,7 +181,7 @@ namespace CustomCritters
                     {
                         if (Chance != 1.0 && Game1.random.NextDouble() > Chance)
                             ret = false;
-                        if (Variable != null && Variable != "")
+                        if (!string.IsNullOrEmpty(Variable))
                         {
                             string[] toks = Variable.Split('.');
 
@@ -202,9 +202,9 @@ namespace CustomCritters
 
                             if (o != null)
                             {
-                                if (Is != null && Is != "" && !o.GetType().IsInstanceOfType(Type.GetType(Is)))
+                                if (!string.IsNullOrEmpty(Is) && !o.GetType().IsInstanceOfType(Type.GetType(Is)))
                                     ret = false;
-                                else if (ValueEquals != null && ValueEquals != "" && !o.ToString().Equals(ValueEquals))
+                                else if (!string.IsNullOrEmpty(ValueEquals) && !o.ToString().Equals(ValueEquals))
                                     ret = false;
                             }
                             else if (RequireNotNull)
